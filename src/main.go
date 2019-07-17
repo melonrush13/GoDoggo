@@ -1,45 +1,55 @@
 package main
 
 import (
-	"flag"
+	"encoding/json"
 	"fmt" // methods for I/O Operations
-	// templates for generating HTML output
-	"net/http" // library with methods to implement HTTP clients and servers
+	"io/ioutil"
+
+	// library with methods to implement HTTP clients and servers
+	"os"
 )
 
 const greeting string = "Hello, World"
 
-type pData struct {
-	Name  string
-	Breed string
+// Dogs struct which contains
+// an array of dogs
+type Dogs struct {
+	Dogs []struct {
+		Name   string `json:"name"`
+		Breed  string `json:"breed"`
+		Age    int    `json:"age"`
+		Owners struct {
+			Dad string `json:"dad"`
+			Mom string `json:"mom"`
+		} `json:"owners"`
+	} `json:"dogs"`
 }
 
 func init() {
 }
 
 func main() {
+	//open jsonFile
+	jsonFile, err := os.Open("dogs.json")
+	// if error on os.Open, handle it
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("opened dogs.json")
+	defer jsonFile.Close()
 
-	http.HandleFunc("/", myHandler)
-	http.HandleFunc("/about", aboutHandler)
+	// read our opened file as a byte array
+	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	http.ListenAndServe(":8080", nil)
+	// initalize dog array
+	var dogs Dogs
 
-	//filename := flag.String("file", "gopher.json", "the json file")
-	flag.Parse()
-	//fmt.Println("Using the story in %s", *filename)
-	fmt.Println(greeting)
+	// unmarshal bytearray
+	json.Unmarshal(byteValue, &dogs)
 
-}
-
-func myHandler(w http.ResponseWriter, r *http.Request) {
-	// For this case, we will always pipe "Hello World" into the response writer
-	fmt.Fprintf(w, "Hello World")
-}
-
-func aboutHandler(w http.ResponseWriter, r *http.Request) {
-	// For this case, we will always pipe "Hello World" into the response writer
-	fmt.Fprintf(w, "about page\n")
-	pD := pData{
-		Name: "Mel",
+	//iterate through json
+	for i := 0; i < len(dogs.Dogs); i++ {
+		fmt.Println("Dog Name: " + dogs.Dogs[i].Name)
+		fmt.Println("Dog Breed: " + dogs.Dogs[i].Breed)
 	}
 }

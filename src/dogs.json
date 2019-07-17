@@ -1,0 +1,22 @@
+{
+    "dogs": [
+      {
+        "name": "Bear",
+        "breed": "Wheaton Terrier",
+        "age": 7,
+        "owners": {
+          "dad": "Erin",
+          "mom": "Matt"
+        }
+      },
+      {
+        "name": "Keetna",
+        "breed": "Husky/Malamute",
+        "age": 1,
+        "owners": {
+          "dad": "Bob",
+          "mom": "Julie"
+        }
+      }
+    ]
+  }
