@@ -2,14 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"fmt" // methods for I/O Operations
+	"fmt"
 	"io/ioutil"
-
-	// library with methods to implement HTTP clients and servers
 	"os"
 )
-
-const greeting string = "Hello, World"
 
 // Dogs struct which contains
 // an array of dogs
@@ -23,9 +19,6 @@ type Dogs struct {
 			Mom string `json:"mom"`
 		} `json:"owners"`
 	} `json:"dogs"`
-}
-
-func init() {
 }
 
 func main() {
