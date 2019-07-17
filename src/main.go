@@ -51,5 +51,6 @@ func main() {
 	for i := 0; i < len(dogs.Dogs); i++ {
 		fmt.Println("Dog Name: " + dogs.Dogs[i].Name)
 		fmt.Println("Dog Breed: " + dogs.Dogs[i].Breed)
+		fmt.Println("Dog Owners: "+dogs.Dogs[i].Owners.Dad, dogs.Dogs[i].Owners.Mom)
 	}
 }
